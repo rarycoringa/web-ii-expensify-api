@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: expensify
+  datasource:
+    url: jdbc:postgresql://expensify-db:5432/expensify
+    username: dummy_user
+    password: dummy_password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false

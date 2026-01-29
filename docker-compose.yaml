@@ -1,0 +1,29 @@
+services:
+  expensify-app:
+    build: .
+    container_name: expensify-app
+    ports:
+      - "8080:8080"
+    networks:
+      - expensify-network
+
+  expensify-db:
+    image: postgres:13
+    container_name: expensify-db
+    environment:
+      POSTGRES_USER: dummy_user
+      POSTGRES_PASSWORD: dummy_password
+      POSTGRES_DB: expensify
+    ports:
+      - "5432:5432"
+    volumes:
+      - expensify-db-data:/var/lib/postgresql/data
+    networks:
+      - expensify-network
+
+volumes:
+  expensify-db-data:
+
+networks:
+  expensify-network:
+    external: true
