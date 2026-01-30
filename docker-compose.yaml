@@ -2,6 +2,13 @@ services:
   expensify-app:
     build: .
     container_name: expensify-app
+    environment:
+      DB_HOST: expensify-db
+      DB_PORT: 5432
+      DB_NAME: expensify
+      DB_USERNAME: dummy_user
+      DB_PASSWORD: dummy_password
+      JWT_SECRET: zWc8nQOVADdplXUcg/ZtXgBZRq9SZY62sAFtnUDOEbg=
     ports:
       - "8080:8080"
     networks:

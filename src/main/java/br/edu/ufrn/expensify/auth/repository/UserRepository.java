@@ -1,0 +1,14 @@
+package br.edu.ufrn.expensify.auth.repository;
+
+import java.util.Optional;
+import java.util.UUID;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import br.edu.ufrn.expensify.auth.entity.User;
+
+public interface UserRepository extends JpaRepository<User, UUID> {
+    
+    Optional<User> findByUsername(String username);
+
+}
