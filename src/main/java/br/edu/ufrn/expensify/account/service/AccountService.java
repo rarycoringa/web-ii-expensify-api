@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import br.edu.ufrn.expensify.account.entity.Account;
+import br.edu.ufrn.expensify.account.exception.AccountNotFoundException;
 import br.edu.ufrn.expensify.account.repository.AccountRepository;
 import br.edu.ufrn.expensify.auth.entity.User;
 import br.edu.ufrn.expensify.auth.service.AuthService;
@@ -39,7 +40,8 @@ public class AccountService {
 
         logger.info("Fetching account with id: {} for user: {}", id, user.getUsername());
     
-        return accountRepository.findByIdAndUser(id, user).orElse(null);
+        return accountRepository.findByIdAndUser(id, user)
+            .orElseThrow(() -> new AccountNotFoundException("Account not found with id: " + id + " for user: " + user.getUsername()));
     }
 
     public Account saveAccount(Account account) {
@@ -63,8 +65,8 @@ public class AccountService {
     public void deleteAccount(UUID id) {
         User user = authService.getAuthenticatedUser();
 
-        logger.info("Deleting account with id: {} fo", id);
-    
+        logger.info("Deleting account with id: {} for user: {}", id, user.getUsername());
+
         accountRepository.deleteByIdAndUser(id, user);
     }
 
