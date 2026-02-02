@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import br.edu.ufrn.expensify.account.exception.AccountNotFoundException;
+import br.edu.ufrn.expensify.auth.exception.UsernameAlreadyExistsException;
 import br.edu.ufrn.expensify.record.ErrorResponse;
 import br.edu.ufrn.expensify.transaction.exception.TransactionNotFoundException;
 
@@ -24,6 +25,13 @@ public class RestExceptionHandler {
         ErrorResponse error = new ErrorResponse(e.getMessage());
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
+    @ExceptionHandler(UsernameAlreadyExistsException.class)
+    public ResponseEntity<ErrorResponse> handleUsernameAlreadyExists(UsernameAlreadyExistsException e) {
+        ErrorResponse error = new ErrorResponse(e.getMessage());
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
     }
 
 }

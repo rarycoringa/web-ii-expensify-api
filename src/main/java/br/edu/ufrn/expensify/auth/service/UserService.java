@@ -2,13 +2,14 @@ package br.edu.ufrn.expensify.auth.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import br.edu.ufrn.expensify.auth.entity.User;
+import br.edu.ufrn.expensify.auth.exception.UsernameAlreadyExistsException;
 import br.edu.ufrn.expensify.auth.repository.UserRepository;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -32,7 +33,12 @@ public class UserService implements UserDetailsService {
     }
 
     public User registerUser(String username, String password) {
+        if (userRepository.existsByUsername(username)) {
+            throw new UsernameAlreadyExistsException(username);
+        }
+
         User user = new User(username, passwordEncoder.encode(password));
+        
         return userRepository.save(user);
     }
 

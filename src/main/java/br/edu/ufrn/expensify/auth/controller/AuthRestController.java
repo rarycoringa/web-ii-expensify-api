@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.edu.ufrn.expensify.auth.entity.User;
 import br.edu.ufrn.expensify.auth.record.AuthRequest;
 import br.edu.ufrn.expensify.auth.record.AuthResponse;
+import br.edu.ufrn.expensify.auth.record.UserResponse;
 import br.edu.ufrn.expensify.auth.service.AuthService;
 import br.edu.ufrn.expensify.auth.service.UserService;
 
@@ -30,13 +31,19 @@ public class AuthRestController {
             request.username(),
             request.password()
         );
-        return ResponseEntity.ok(new AuthResponse(token));
+
+        AuthResponse response = new AuthResponse(token);
+
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/register")
-    public ResponseEntity<User> register(@RequestBody AuthRequest request) {
+    public ResponseEntity<UserResponse> register(@RequestBody AuthRequest request) {
         User user = userService.registerUser(request.username(), request.password());
-        return ResponseEntity.created(null).body(user);
+        
+        UserResponse response = new UserResponse(user.getId(), user.getUsername());
+        
+        return ResponseEntity.created(null).body(response);
     }
 
 }
