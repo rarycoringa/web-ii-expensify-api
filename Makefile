@@ -5,4 +5,4 @@ down:
 	docker-compose down
 
 logs:
-	docker-compose logs -f expensify-app
+	docker-compose logs -f expensify-api
