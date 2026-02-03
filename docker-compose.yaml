@@ -11,6 +11,8 @@ services:
       DB_USERNAME: dummy_user
       DB_PASSWORD: dummy_password
       JWT_SECRET: zWc8nQOVADdplXUcg/ZtXgBZRq9SZY62sAFtnUDOEbg=
+    depends_on:
+      - expensify-db
     ports:
       - "8080:8080"
     networks:

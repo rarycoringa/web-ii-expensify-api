@@ -21,11 +21,11 @@ import br.edu.ufrn.expensify.account.service.AccountService;
 
 @RestController
 @RequestMapping("/accounts")
-public class AccountRestController {
+public class AccountController {
     
     private final AccountService accountService;
 
-    public AccountRestController(AccountService accountService) {
+    public AccountController(AccountService accountService) {
         this.accountService = accountService;
     }
 

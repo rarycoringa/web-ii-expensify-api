@@ -27,12 +27,12 @@ import br.edu.ufrn.expensify.transaction.service.TransactionService;
 
 @RestController
 @RequestMapping("/transactions")
-public class TransactionRestController {
+public class TransactionController {
     
     private final TransactionService transactionService;
     private final AccountService accountService;
 
-    public TransactionRestController(
+    public TransactionController(
         TransactionService transactionService,
         AccountService accountService
     ) {

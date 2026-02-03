@@ -15,12 +15,12 @@ import br.edu.ufrn.expensify.auth.service.UserService;
 
 @RestController
 @RequestMapping("/auth")
-public class AuthRestController {
+public class AuthController {
     
     private final AuthService authService;
     private final UserService userService;
 
-    public AuthRestController(AuthService authService, UserService userService) {
+    public AuthController(AuthService authService, UserService userService) {
         this.authService = authService;
         this.userService = userService;
     }
