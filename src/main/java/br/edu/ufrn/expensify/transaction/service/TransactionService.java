@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.edu.ufrn.expensify.account.service.AccountService;
 import br.edu.ufrn.expensify.auth.entity.User;
@@ -86,6 +87,7 @@ public class TransactionService {
             .orElseThrow(() -> new TransactionNotFoundException("Income not found with id: " + id + " for user: " + user.getUsername()));
     }
 
+    @Transactional
     public Income createIncome(Income income) {
         User user = authService.getAuthenticatedUser();
         income.setUser(user);
@@ -99,6 +101,7 @@ public class TransactionService {
         return createdIncome;
     }
 
+    @Transactional
     public void deleteIncome(Income income) {
         accountService.decreaseBalance(income.getAccount().getId(), income.getAmount());
         incomeRepository.delete(income);
@@ -125,6 +128,7 @@ public class TransactionService {
             .orElseThrow(() -> new TransactionNotFoundException("Expense not found with id: " + id + " for user: " + user.getUsername()));
     }
 
+    @Transactional
     public Expense createExpense(Expense expense) {
         User user = authService.getAuthenticatedUser();
         expense.setUser(user);
@@ -138,6 +142,7 @@ public class TransactionService {
         return createdExpense;
     }
 
+    @Transactional
     public void deleteExpense(Expense expense) {
         accountService.increaseBalance(expense.getAccount().getId(), expense.getAmount());
         expenseRepository.delete(expense);
@@ -164,6 +169,7 @@ public class TransactionService {
             .orElseThrow(() -> new TransactionNotFoundException("Transfer not found with id: " + id + " for user: " + user.getUsername()));
     }
 
+    @Transactional
     public Transfer createTransfer(Transfer transfer) {
         User user = authService.getAuthenticatedUser();
         transfer.setUser(user);
@@ -178,6 +184,7 @@ public class TransactionService {
         return createdTransfer;
     }
 
+    @Transactional
     public void deleteTransfer(Transfer transfer) {
         accountService.increaseBalance(transfer.getSourceAccount().getId(), transfer.getAmount());
         accountService.decreaseBalance(transfer.getDestinationAccount().getId(), transfer.getAmount());

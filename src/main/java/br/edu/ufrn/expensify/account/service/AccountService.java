@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.edu.ufrn.expensify.account.entity.Account;
 import br.edu.ufrn.expensify.account.exception.AccountNotFoundException;
@@ -44,6 +45,7 @@ public class AccountService {
             .orElseThrow(() -> new AccountNotFoundException("Account not found with id: " + id + " for user: " + user.getUsername()));
     }
 
+    @Transactional
     public Account saveAccount(Account account) {
         User user = authService.getAuthenticatedUser();
 
@@ -54,12 +56,14 @@ public class AccountService {
         return accountRepository.save(account);
     }
 
+    @Transactional
     public Account updateAccount(Account account) {
         logger.info("Updating account with id: {} for user: {}", account.getId(), account.getUser().getUsername());
 
         return accountRepository.save(account);
     }
-
+    
+    @Transactional
     public void deleteAccount(UUID id) {
         User user = authService.getAuthenticatedUser();
 
@@ -67,7 +71,8 @@ public class AccountService {
 
         accountRepository.deleteByIdAndUser(id, user);
     }
-
+    
+    @Transactional
     public void increaseBalance(UUID accountId, Double amount) {
         Account account = getAccountById(accountId);
 
@@ -77,7 +82,8 @@ public class AccountService {
 
         logger.info("Increased balance of account with id: {} by amount: {}", accountId, amount);
     }
-
+    
+    @Transactional
     public void decreaseBalance(UUID accountId, Double amount) {
         Account account = getAccountById(accountId);
 
